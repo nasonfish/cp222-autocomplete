@@ -167,21 +167,27 @@ public class Day15 {
         }
     }
 
+    /**
+     * If there's a problem and we can't do our ~fancy~ autocomplete, this is a Scanner alternative for
+     * portability.
+     *
+     * This may be invoked manually using the flag -t.
+     */
     public void doScannerFallback(){
-        // scanner fallback
         Scanner scanner = new Scanner(System.in);
         while(scanner.hasNextLine()) {
             System.out.print("Enter word: ");
-            String word = scanner.nextLine();
-            ArrayList<ArrayList<Character>> words = tree.getChildren(new StringWrapper(word));
+            String word = scanner.nextLine();  // read lines one at a time.
+            ArrayList<ArrayList<Character>> words = tree.getChildren(new StringWrapper(word)); // get results
             if (words == null) {
                 System.out.println("No completions found.");
                 continue;
             }
-            for (ArrayList<Character> w : words) {
-                System.out.println(new StringWrapper(w).getString());
+            // note that if there's no completions but the word they typed was a word, it will output nothing.
+            for (ArrayList<Character> w : words) { // for every word,
+                System.out.println(new StringWrapper(w).getString()); // print it.
             }
         }
-        System.out.println("Thank you!");
+        System.out.println("Thank you!"); // EOF, exit.
     }
 }
