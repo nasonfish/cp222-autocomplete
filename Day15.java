@@ -70,16 +70,15 @@ public class Day15 {
         Scanner scanner;
         try {
             scanner = Utils.pullText(new URL(url));
+            while(scanner.hasNextLine()){
+                tree.insert(new StringWrapper(scanner.nextLine()));
+            }
+            scanner.close();
         } catch (MalformedURLException e) {
             System.out.println("Could not grab data from the Internet.");
             e.printStackTrace();
             System.exit(1);
-            return;
         }
-        while(scanner.hasNextLine()){
-            tree.insert(new StringWrapper(scanner.nextLine()));
-        }
-        scanner.close();
     }
 
     /**
@@ -175,9 +174,10 @@ public class Day15 {
      */
     public void doScannerFallback(){
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter word: ");
         while(scanner.hasNextLine()) {
-            System.out.print("Enter word: ");
             String word = scanner.nextLine();  // read lines one at a time.
+            if(word.length() == 0) continue;
             ArrayList<ArrayList<Character>> words = tree.getChildren(new StringWrapper(word)); // get results
             if (words == null) {
                 System.out.println("No completions found.");
@@ -187,6 +187,7 @@ public class Day15 {
             for (ArrayList<Character> w : words) { // for every word,
                 System.out.println(new StringWrapper(w).getString()); // print it.
             }
+            System.out.print("Enter word: ");
         }
         System.out.println("Thank you!"); // EOF, exit.
     }
